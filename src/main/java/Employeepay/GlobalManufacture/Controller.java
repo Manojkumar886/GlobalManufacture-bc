@@ -1,9 +1,10 @@
 package Employeepay.GlobalManufacture;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -22,4 +23,27 @@ public class Controller
         return  serv.create(emp).getEmpName()+" has been added in my oracle database";
     }
 
+    @GetMapping("/")
+    public List<EmployeeDetails>  listall()
+    {
+        return (List<EmployeeDetails>) serv.viewall();
+    }
+
+    @PutMapping("/update")
+    public String updating(@RequestBody EmployeeDetails emp)
+    {
+        return serv.create(emp).getEmpName()+" has been updated successfully";
+    }
+
+    @DeleteMapping("/deleteone/{id}")
+    public String deleting(@PathVariable("id")int id)
+    {
+        return  serv.removing(id)+"";
+    }
+
+    @GetMapping("/readone/{empid}")
+    public Optional<EmployeeDetails> showone(@PathVariable("empid")int empid)
+    {
+        return serv.readone(empid);
+    }
 }
